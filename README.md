@@ -1,0 +1,2 @@
+# MineSweeper
+bot or not
