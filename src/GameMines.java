@@ -47,7 +47,7 @@ class GameMines {
     }
 
     void openCells(ArrayList<Coordinates> c) {
-        for (Coordinates crd:c) {
+        for (Coordinates crd : c) {
             openCells(crd);
             c.remove(crd);
         }
@@ -126,11 +126,12 @@ class GameMines {
 
 
     class Cell { // playing field cell
-        Double possibility;
+        double possibility = 0.0;
         int countBombNear;
         boolean isOpen, isMine, isFlag;
 
-        public Double getPossibility() {
+
+        public double getPossibility() {
             return possibility;
         }
 
@@ -143,7 +144,6 @@ class GameMines {
             bangMine = isMine;
             if (!isMine) countOpenedCells++;
         }
-
 
 
 //        //считает количество неоткрытых соседних клеток без флагов
@@ -277,6 +277,12 @@ class GameMines {
             g.drawString(str, x * BLOCK_SIZE + 13, y * BLOCK_SIZE + 40);
         }
 
+        void paintPossibility(Graphics g, String str, int x, int y, Color color) {
+            g.setColor(color);
+            g.setFont(new Font("", Font.BOLD, BLOCK_SIZE / 4));
+            g.drawString(str, x * BLOCK_SIZE + 5, y * BLOCK_SIZE + 10);
+        }
+
         void paint(Graphics g, int x, int y) {
             g.setColor(Color.lightGray);
             g.drawRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
@@ -294,6 +300,9 @@ class GameMines {
             } else if (isMine) paintBomb(g, x, y, bangMine ? Color.red : Color.black);
             else if (countBombNear > 0)
                 paintString(g, Integer.toString(countBombNear), x, y, new Color(COLOR_OF_NUMBERS[countBombNear - 1]));
+            if (isNotOpen()) {
+                paintPossibility(g, String.format("%.2f",possibility), x, y, Color.BLACK);
+            }
         }
     }
 

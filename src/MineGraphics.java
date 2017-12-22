@@ -88,6 +88,7 @@ public class MineGraphics extends JFrame {
                 if (!game.bangMine) game.openCells(bot.randomOpen(game.field, fieldSize));
                 btext.setText("Random");
                 game.getCanvas().repaint();
+                bot.setInfo(1);
             }
             if (bot.getInfo() == 1) {
                 if (!game.bangMine) bot.simpleTurn(game.field, fieldSize);
@@ -100,6 +101,12 @@ public class MineGraphics extends JFrame {
                 if (game.youWon && !game.bangMine) JOptionPane.showMessageDialog(MineGraphics.this, "You win!");
                 btext.setText("Common turn");
                 game.getCanvas().repaint();
+                bot.setInfo(2);
+            }
+            if (bot.getInfo() == 2) {
+                if (!game.bangMine) bot.smartTurn(game.field, fieldSize);
+                game.getCanvas().repaint();
+                bot.setInfo(1);
             }
         });
         Box bbox2 = Box.createVerticalBox();
@@ -139,11 +146,11 @@ public class MineGraphics extends JFrame {
 
     private void initGame(int fieldSize, int numberOfMines, JFrame gameField) {
         this.game = new GameMines(fieldSize, NUMBER_OF_MINES);
-        //game.initField();
-        int[] mines = {2, 15, 18, 45, 51, 73, 78, 85, 94, 95};
+        game.initField();
+        //int[] mines = {2, 15, 18, 45, 51, 73, 78, 85, 94, 95};
+        //int[] mines = {0, 2};
 
-
-        game.initFieldTest(mines);
+       //game.initFieldTest(mines);
         //gameField.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gameField.setBounds(430, 100, fieldSize * BLOCK_SIZE + FIELD_DX + 2, fieldSize * BLOCK_SIZE + FIELD_DY - 14);
         setResizable(false);

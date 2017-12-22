@@ -6,10 +6,10 @@ public class Coordinates {
     private int y;
     boolean swOpenOrFlag;
 
-    Coordinates(int x, int y, Boolean b) {
+    Coordinates(int x, int y) {
         this.x = x;
         this.y = y;
-        this.swOpenOrFlag = b;
+        //this.swOpenOrFlag = b;
     }
 
     public int getX() {
